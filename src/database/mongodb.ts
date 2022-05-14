@@ -8,7 +8,7 @@ export async function connectMongoDb() {
     await connect(config.MONGODB_URI || URI)
         .then(() => {
             logger.info(`Conexión con MongoDB establecida`);
-            logger.info(`Coonectado a MongoDB en la URI`);
+            logger.info(`Conectado a MongoDB en la URI: ${config.MONGODB_URI || URI}`);
         })
         .catch((err) => {
             logger.error(`Error al conectar con MongoDB: ${err.message}`);
