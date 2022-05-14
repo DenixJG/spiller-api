@@ -4,5 +4,5 @@
     "ingore": [
         "src/**/*.spec.ts"
     ],
-    "exec": "npx ts-node"
+    "exec": "npx ts-node --files"
 }

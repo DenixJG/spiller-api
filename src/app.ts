@@ -5,6 +5,7 @@ import path from 'path';
 
 // Routes imports
 import indexRoute from './routes/index.routes';
+import logger from './libs/logger';
 
 const app: Application = express();
 

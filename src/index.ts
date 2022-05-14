@@ -1,14 +1,14 @@
 import app from "./app";
-
+import logger from "./libs/logger";
 
 function main() {
     app.listen(app.get('port'))
-        .on('listening', () => {
-            console.log(`[LOG]: Servidor iniciado - localhost:${app.get('port')}`);
-        }).on('error', () => {
-            console.log('[LOG]: Error en el servidor');
-        }).on('close', () => {
-            console.log('[LOG]: Servidor cerrado');
+        .on('listening', () => {            
+            logger.info(`Servidor iniciado - http://localhost:${app.get('port')}`);
+        }).on('error', (err) => {            
+            logger.error(`Error en el servidor: ${err.message}`);
+        }).on('close', () => {            
+            logger.info('Servidor cerrado, bye!');
         });
 }
 
