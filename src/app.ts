@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import path from 'path';
 import { config } from './config';
-import logger from './libs/logger';
+import { httpLogger } from './middlewares/CustomLogger';
 
 // Routes imports
 import indexRoute from './routes/index.routes';
@@ -23,7 +23,7 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs')
 
 // Middlewares
-app.use(morgan('dev'));
+app.use(httpLogger()); // Loger personalizado
 app.use(express.json());
 
 // Routes
