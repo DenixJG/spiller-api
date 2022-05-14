@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const router: Router = Router();
 
-router.get('/index', (req, res) => {
+router.get('/', (req, res) => {
     res.status(200).render('index');
 });
 

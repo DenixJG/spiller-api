@@ -2,15 +2,17 @@ import express, { Application } from 'express';
 import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import path from 'path';
+import { config } from './config';
+import logger from './libs/logger';
 
 // Routes imports
 import indexRoute from './routes/index.routes';
-import logger from './libs/logger';
+import authRoutes from './routes/auth.routes';
 
 const app: Application = express();
 
 // Settings
-app.set('port', process.env.PORT || 4000);
+app.set('port', config.PORT);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', engine({
     defaultLayout: 'main',
@@ -25,7 +27,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 // Routes
-app.use('/', indexRoute);
+app.use('/', indexRoute, authRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
