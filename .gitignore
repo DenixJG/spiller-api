@@ -107,4 +107,4 @@ dist
 src/public/vendor
 
 # Visual Studio Code folder
-.vscode/*
+.vscode/
