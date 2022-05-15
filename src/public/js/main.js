@@ -2,7 +2,9 @@ window.onload = function () {
 
 }
 
-function playAudio(context) {
+// TODO: Cambiar comentarios a español
+
+async function playAudio(context) {
     let timer;    
 
     // Get the offsetparent of the context and get the audio tag
@@ -39,8 +41,13 @@ function playAudio(context) {
         activeContext.classList.replace('fa-pause', 'fa-play');
     }
 
-    // Play the audio
-    audio.play();
+    try {
+        // Play the audio
+        await audio.play();
+        console.log('Playing...');
+      } catch (err) {
+        console.log('Failed to play...' + err);
+      }
 
     // On playing increment the progress bar
     audio.addEventListener('playing', function (_event) {

@@ -45,8 +45,8 @@ export async function login(req: Request, res: Response) {
         });
 
         // Establecemos el token en la cookie      
-        res.cookie('token', token, { 
-            httpOnly: true, 
+        res.cookie('token', token, {
+            httpOnly: true,
             sameSite: 'lax',
             maxAge: 86400000 // expires in 24 hours
         });
@@ -124,7 +124,7 @@ export function renderForgot(req: Request, res: Response) {
  * @param req 
  * @param res 
  */
-export function logout(req: Request, res: Response) {    
+export function logout(req: Request, res: Response) {
     req.session.destroy((err) => {
         if (err) {
             logger.error(`Error al cerrar sesión: ${err}`);

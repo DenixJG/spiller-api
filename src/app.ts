@@ -7,10 +7,12 @@ import cookieParser from 'cookie-parser';
 import flash from 'connect-flash';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import hbsHelpers from 'handlebars-helpers';
 
 // Routes imports
 import indexRoute from './routes/index.routes';
 import authRoutes from './routes/auth.routes';
+import tracksRoutes from './routes/tracks.routes';
 
 // Import libs
 import { createAdmin, createRoles } from './libs/initialSetup';
@@ -28,7 +30,8 @@ app.engine('hbs', engine({
     defaultLayout: 'main',
     layoutsDir: path.join(app.get('views'), 'layouts'),
     partialsDir: path.join(app.get('views'), 'partials'),
-    extname: '.hbs'
+    extname: '.hbs',
+    helpers: hbsHelpers()
 }));
 app.set('view engine', 'hbs')
 
@@ -68,6 +71,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', indexRoute, authRoutes);
+app.use('/', tracksRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));

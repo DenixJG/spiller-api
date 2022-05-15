@@ -1,5 +1,6 @@
 import { Schema, Model, Document, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
+import Role from './Role';
 
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
@@ -23,6 +24,9 @@ export interface IUser extends Document {
 export interface UserModel extends Model<IUser> {
     encryptPassword: (password: string) => Promise<string>;
     comparePassword: (password: string, hash: string) => Promise<boolean>;
+    isAdmin: (user: IUser) => Promise<boolean>;
+    isArtist: (user: IUser) => Promise<boolean>;
+    isUser: (user: IUser) => Promise<boolean>;
 }
 
 /**
@@ -45,6 +49,24 @@ UserSchema.statics.encryptPassword = async (password: string) => {
  */
 UserSchema.statics.comparePassword = async (password: string, hash: string) => {
     return await bcrypt.compare(password, hash);
+}
+
+UserSchema.statics.isAdmin = async (user: IUser) => {
+    if (!user) { return false; }
+    const roles = await Role.find({ _id: { $in: user.roles } });
+    return roles.some(role => role.name === 'admin');
+}
+
+UserSchema.statics.isArtist = async (user: IUser) => {
+    if (!user) { return false; }
+    const roles = await Role.find({ _id: { $in: user.roles } });
+    return roles.some(role => role.name === 'artist');
+}
+
+UserSchema.statics.isUser = async (user: IUser) => {
+    if (!user) { return false; }
+    const roles = await Role.find({ _id: { $in: user.roles } });
+    return roles.some(role => role.name === 'user');
 }
 
 export default model<IUser, UserModel>('User', UserSchema);
