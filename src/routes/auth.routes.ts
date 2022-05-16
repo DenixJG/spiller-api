@@ -7,7 +7,8 @@ import {
     renderSignup,
     login,
     signup,
-    logout
+    logout,
+    renderProfile
 } from '../controllers/auth.controller';
 
 const router: Router = Router();
@@ -21,5 +22,7 @@ router.post('/signup', [ checkDuplicateUsernameOrEmail, checkRolesExist ], signu
 router.get('/forgot', renderForgot);
 
 router.get('/login/logout', [ verifyToken ], logout);
+
+router.get('/profile', [ verifyToken ], renderProfile);
 
 export default router;

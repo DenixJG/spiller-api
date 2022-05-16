@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import Role from '../models/Role';
 import logger from '../libs/logger';
+import Artist from '../models/Artist';
 
 export function renderLogin(req: Request, res: Response) {
     res.render('auth/login')
@@ -138,5 +139,17 @@ export function logout(req: Request, res: Response) {
             res.clearCookie('token');
             res.redirect('/');
         }
+    });
+}
+
+/**
+ * Renderiza la página principal del usuario autenticado.
+ * 
+ * @param req 
+ * @param res 
+ */
+export async function renderProfile(req: Request, res: Response) {
+    res.render('auth/profile', { 
+        title: 'Perfil'              
     });
 }
