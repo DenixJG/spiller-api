@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, ErrorRequestHandler, NextFunction } from 'express';
 import { engine } from 'express-handlebars';
 import path from 'path';
 import { config } from './config';
@@ -16,6 +16,7 @@ import tracksRoutes from './routes/tracks.routes';
 
 // Import libs
 import { createAdmin, createRoles } from './libs/initialSetup';
+import logger from './libs/logger';
 
 const app: Application = express();
 
@@ -64,9 +65,9 @@ app.use((req, res, next) => {
     res.locals.warning_msg = req.flash('warning_msg');
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
-    res.locals.user = req.session.user;   
+    res.locals.user = req.session.user;
     res.locals.role = req.session.role;
-    
+
     next();
 });
 
@@ -77,9 +78,14 @@ app.use('/', tracksRoutes);
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Not found handler
+// Error handling for 404
 app.use((req, res) => {
-    res.render('404');
+    res.status(404).render('errors/404');
+});
+
+// Error handling for 500
+app.use((err: ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) => {
+    res.status(500).render('errors/500');
 });
 
 export default app;
