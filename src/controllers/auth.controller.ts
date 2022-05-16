@@ -54,6 +54,12 @@ export async function login(req: Request, res: Response) {
         // Guardamos el usuario en la sesión para poder usarlo en el resto de la aplicación
         req.session.user = user;
 
+        req.session.role = {
+            isAdmin: await User.isAdmin(user),
+            isArtist: await User.isArtist(user),
+            isUser: await User.isUser(user)
+        }
+
         // Redireccionamos al usuario a la página de inicio
         req.flash('info_msg', `Bienvenido de nuevo ${user.username}!`);
 

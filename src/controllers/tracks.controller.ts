@@ -6,7 +6,7 @@ import { getBucket } from '../database/mongodb';
 
 // Imports de los modelos
 import Track, { ITrack } from '../models/Track';
-import Artist from '../models/Artist';
+import Artist, { IArtist } from '../models/Artist';
 import User from '../models/User';
 import { mongo } from 'mongoose';
 
@@ -19,12 +19,7 @@ import { mongo } from 'mongoose';
 export async function renderTracks(req: Request, res: Response) {
     res.render('tracks/list', {
         title: 'Canciones',
-        tracks: await Track.find().populate('artistId', 'name', Artist).lean(),
-        roles: {
-            admin: await User.isAdmin(req.session.user),
-            artist: await User.isArtist(req.session.user),
-            user: await User.isUser(req.session.user)
-        }
+        tracks: await Track.find().populate('artistId', 'name', Artist).lean()       
     });
 }
 
@@ -36,12 +31,7 @@ export async function renderTracks(req: Request, res: Response) {
  */
 export async function renderNewTrack(req: Request, res: Response) {
     res.render('tracks/new', {
-        title: 'Nueva Canción',
-        roles: {
-            admin: await User.isAdmin(req.session.user),
-            artist: await User.isArtist(req.session.user),
-            user: await User.isUser(req.session.user)
-        }
+        title: 'Nueva Canción'
     });
 }
 
@@ -100,10 +90,10 @@ export async function newTrack(req: Request, res: Response) {
             logger.info(`Archivo subido con éxito: ${fileName}`);
             // Buscar el artista en la base de datos
             const artistFound = await Artist.findOne({ name: artist });
-            const newArtist = artistFound != undefined ? artistFound : new Artist({ name: artist, userId: req.session.user._id });
+            const newArtist: IArtist = artistFound != undefined ? artistFound : new Artist({ name: artist, userId: req.session.user._id });
 
             // Crear el track
-            const newTrack = new Track({
+            const newTrack: ITrack = new Track({
                 name: title,
                 duration: parseInt(duration),
                 artistId: new mongo.ObjectId(newArtist._id),
