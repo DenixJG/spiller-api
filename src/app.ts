@@ -13,6 +13,7 @@ import hbsHelpers from 'handlebars-helpers';
 import indexRoute from './routes/index.routes';
 import authRoutes from './routes/auth.routes';
 import tracksRoutes from './routes/tracks.routes';
+import artistsRoutes from './routes/artists.routes';
 
 // Import libs
 import { createAdmin, createRoles } from './libs/initialSetup';
@@ -74,6 +75,7 @@ app.use((req, res, next) => {
 // Routes
 app.use('/', indexRoute, authRoutes);
 app.use('/', tracksRoutes);
+app.use('/', artistsRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));

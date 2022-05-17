@@ -3,12 +3,12 @@ import logger from '../libs/logger';
 import multer, { StorageEngine, Multer } from 'multer';
 import { Readable } from 'stream';
 import { getBucket } from '../database/mongodb';
+import { mongo } from 'mongoose';
 
 // Imports de los modelos
 import Track, { ITrack } from '../models/Track';
 import Artist, { IArtist } from '../models/Artist';
-import User from '../models/User';
-import { mongo } from 'mongoose';
+import User, { IUser } from '../models/User';
 
 /**
  * Renderiza la vista de todos los tracks
@@ -19,7 +19,7 @@ import { mongo } from 'mongoose';
 export async function renderTracks(req: Request, res: Response) {
     res.render('tracks/list', {
         title: 'Canciones',
-        tracks: await Track.find().populate('artistId', 'name', Artist).lean()       
+        tracks: await Track.find().populate('artistId', 'name', Artist).lean()
     });
 }
 
@@ -31,7 +31,8 @@ export async function renderTracks(req: Request, res: Response) {
  */
 export async function renderNewTrack(req: Request, res: Response) {
     res.render('tracks/new', {
-        title: 'Nueva Canción'
+        title: 'Nueva Canción',
+        artist: await Artist.findOne({ userId: new mongo.ObjectId(req.session.user._id) }).lean(),
     });
 }
 
