@@ -10,14 +10,10 @@ import MongoStore from 'connect-mongo';
 import hbsHelpers from 'handlebars-helpers';
 
 // Routes imports
-import indexRoute from './routes/index.routes';
-import authRoutes from './routes/auth.routes';
-import tracksRoutes from './routes/tracks.routes';
-import artistsRoutes from './routes/artists.routes';
+import * as routes from './routes';
 
 // Import libs
 import { createAdmin, createRoles } from './libs/initialSetup';
-import logger from './libs/logger';
 
 const app: Application = express();
 
@@ -73,9 +69,11 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/', indexRoute, authRoutes);
-app.use('/', tracksRoutes);
-app.use('/', artistsRoutes);
+app.use('/', routes.indexRoute);
+app.use('/', routes.authRoutes);
+app.use('/', routes.tracksRoutes);
+app.use('/', routes.artistsRoutes);
+app.use('/', routes.playlistsRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));

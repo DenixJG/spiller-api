@@ -1,0 +1,51 @@
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="card shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Nueva Playlist</h1>
+                        <form method="post" action="/profile/playlists/new" class="needs-validation" novalidate=""
+                            autocomplete="off">
+                            {{!-- Nombre --}}
+                            <div class="mb-3">
+                                <label class="mb- text-muted" for="name">Nombre</label>
+                                <input id="name" type="text" class="form-control" name="name" value="" required
+                                    autofocus>
+                                <div class="invalid-feedback">
+                                    Nombre requerido.
+                                </div>
+                            </div>
+
+                            {{!-- Descripcion --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="description">Descripci&oacute;n</label>
+                                </div>
+                                <textarea class="form-control" name="description" id="description" cols="30"
+                                    rows="4"></textarea>
+                            </div>
+
+                            {{!-- Id del usuario al que se vincula la playlist --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="userId">Usuario</label>
+                                </div>
+                                <input id="userId" type="text" class="form-control" name="userId" required
+                                    readonly="true" value="{{user._id}}">
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn btn-primary ms-auto">
+                                    Crear
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/validate-form.js"></script>
