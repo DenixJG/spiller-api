@@ -5,11 +5,11 @@ window.onload = function () {
 // TODO: Cambiar comentarios a español
 
 async function playAudio(context) {
-    let timer;    
+    let timer;
 
     // Get the offsetparent of the context and get the audio tag
     let offsetParent = context.offsetParent;
-    let audio = offsetParent.getElementsByTagName('audio')[0];    
+    let audio = offsetParent.getElementsByTagName('audio')[0];
 
     // If the audio is playing pause it
     if (!audio.paused) {
@@ -45,9 +45,9 @@ async function playAudio(context) {
         // Play the audio
         await audio.play();
         console.log('Playing...');
-      } catch (err) {
+    } catch (err) {
         console.log('Failed to play...' + err);
-      }
+    }
 
     // On playing increment the progress bar
     audio.addEventListener('playing', function (_event) {
@@ -55,7 +55,7 @@ async function playAudio(context) {
         advance(duration, audio);
     });
 
-    audio.addEventListener('ended', function(_event){        
+    audio.addEventListener('ended', function (_event) {
         // Remove the class from the context
         context.classList.replace('fa-pause', 'fa-play');
     });
