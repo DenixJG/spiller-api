@@ -1,0 +1,35 @@
+version: '3.1'
+
+services:
+    mongo:
+        image: mongo
+        container_name: mongo_db_server
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        volumes:
+            - ./mongo-volume/data:/data/db            
+        ports: 
+            - 27017:27017
+    
+    spiller-music:
+        image: spiller-music
+        container_name: spiller_music_app
+        build:
+            dockerfile: ./Dockerfile
+        ports: 
+            - 4000:4000
+        depends_on:
+            - mongo
+        environment:
+            PORT: 4000
+            NODE_ENV: development
+            MONGODB_HOST: mongo
+            MONGODB_PORT: 27017
+            MONGODB_USERNAME: root
+            MONGODB_PASSWORD: example
+            EXPRESS_SESSION_SECRET: secret
+            JWT_SECRET: secret
+            ADMIN_EMAIL: admin@localhost.com
+            ADMIN_PASSWORD: admin
+            ADMIN_USERNAME: admin

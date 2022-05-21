@@ -33,6 +33,8 @@ app.engine('hbs', engine({
 }));
 app.set('view engine', 'hbs')
 
+const MONGODB_URI = `mongodb://${config.MONGODB_USERNAME}:${config.MONGODB_PASSWORD}@${config.MONGODB_HOST}:${config.MONGODB_PORT}/?authMechanism=DEFAULT`;
+
 // Middlewares
 app.use(httpLogger()); // Loger personalizado
 app.use(express.json());
@@ -44,7 +46,7 @@ app.use(
         resave: false,
         saveUninitialized: false,
         store: MongoStore.create({
-            mongoUrl: config.MONGODB_URI
+            mongoUrl: MONGODB_URI
         }),
         cookie: {
             secure: false,

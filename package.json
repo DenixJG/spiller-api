@@ -4,7 +4,8 @@
   "description": "- [Pedro Jorquera Hoyas](https://github.com/pedrojorquera)\r - [Rafael Ionut Popescu](https://github.com/DenixJG)",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsc && node ./dist/index.js",
+    "start": "node ./dist/index.js",
+    "build": "npx tsc",
     "clear": "npx rimraf ./dist",
     "dev": "nodemon ./src/index.ts"
   },
