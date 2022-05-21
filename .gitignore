@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Vendor files - Bootstrap, Fontawesome etc.
+src/public/vendor
+
+# Visual Studio Code folder
+.vscode/
