@@ -74,6 +74,7 @@ app.use('/', routes.authRoutes);
 app.use('/', routes.tracksRoutes);
 app.use('/', routes.artistsRoutes);
 app.use('/', routes.playlistsRoutes);
+app.use('/', routes.aboutRoutes);
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
