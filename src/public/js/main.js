@@ -112,3 +112,14 @@ function startTimer(duration, element, percent) {
         timer = setTimeout(function () { advance(duration, element) }, 100);
     }
 }
+
+/**
+ * Obtiene el id de la canción y lo pasa al input que se envia al servidor
+ * @param {*} element 
+ */
+function getTrackToAdd(element) {
+    let trackId = element.getAttribute('data-track-id');
+    let inputTrackId = document.querySelector("#trackId");
+
+    inputTrackId.value = trackId;
+}

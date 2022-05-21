@@ -1,7 +1,8 @@
 import { Request, Response } from 'express';
-import { mongo } from 'mongoose';
+import { mongo, MongooseError, Schema } from 'mongoose';
 import logger from '../libs/logger';
 import Playlist, { IPlaylist } from '../models/Playlist';
+import Track, { ITrack } from '../models/Track';
 
 export async function renderPlaylists(req: Request, res: Response) {
     res.render('playlist/list', {
@@ -60,3 +61,66 @@ export async function createPlaylist(req: Request, res: Response) {
         res.redirect('/profile/playlists/new');
     }
 }
+
+export async function addTrackToPlaylist(req: Request, res: Response) {
+
+    try {
+        const { playlistId, trackId } = req.body;
+
+        // Comprobar si 'playlistId' es un array
+        if (Array.isArray(playlistId)) {
+            playlistId.forEach(async (id: string) => {
+                await addToPlaylist(id, trackId, req, res);
+            });
+            req.flash('success_msg', 'Tracks agregado a las playlists');
+            res.redirect('/tracks');
+        } else {
+            await addToPlaylist(playlistId, trackId, req, res);
+            req.flash('success_msg', 'Track agregado a la playlist');
+            res.redirect('/tracks');
+        }
+
+    } catch (error) {
+        logger.error(`Error al agregar track a playlist: ${error}`);
+        req.flash('error_msg', `${error}`);
+    }
+}
+
+/**
+ * Agrega un track a una playlist especifica.
+ * 
+ * @param playlistId El id de la playlist.
+ * @param trackId El id del track a agregar.
+ * @param req 
+ * @param res 
+ */
+async function addToPlaylist(playlistId: any, trackId: any, req: Request, res: Response) {
+    const playlist = await Playlist.findById(playlistId);
+
+    if (playlist) {
+        if (playlist?.tracks?.indexOf(trackId) === -1) {
+            // Agregar el track a la playlist y guardar el total de tracks
+            playlist.totalTracks = playlist.tracks.push(trackId);
+
+            // Obtener el track para saber su duracion
+            const track = await Track.findById(trackId);
+
+            // Si el track existe, sumar la duracion
+            if (track) {
+                if (playlist.totalDuration) {
+                    playlist.totalDuration += track.duration;
+                } else {
+                    playlist.totalDuration = track.duration;
+                }
+            }
+
+            await playlist.save();
+        } else {
+            throw new Error('El track ya existe en la playlist');
+        }
+
+    } else {
+        throw new Error('Playlist no encontrada');
+    }
+}
+

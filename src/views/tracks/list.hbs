@@ -7,79 +7,50 @@
     </div>
     {{/or}}
     <div class="container mt-4 p-4">
-        {{#if results}}
-
-        {{#if results.tracks}}
-        <div class="tracks-found">
-            <h3>Canciones encontradas</h3>
-            <div class="dropdown-divider"></div>
-            {{#each results.tracks as |track|}}
-            <div class="card text-white bg-dark mb-3" data-track-id="{{track._id}}">
-                <div class="row">
-                    <div class="col-md-2 text-center m-auto">
-                        <i class="fa-solid fa-play" data-track-file-id="{{track.trackFileId}}"
-                            onclick="playAudio(this)"></i>
-                    </div>
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h6 class="card-title">{{track.name}}</h6>
-                            <p class="card-text"><small class="text-muted">{{track.artistId.name}}</small></p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 0%" id="progress"></div>
-                            </div>
-                            <audio id="player" hidden="true" preload="none"
-                                src="http://localhost:4000/tracks/play/{{track.trackFileId}}"></audio>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-        {{/if}}
-
-        {{#if results.artists}}
-        <div class="artists-found">
-            <h3>Artistas encontrados</h3>
-            <div class="dropdown-divider"></div>
-            {{#each results.artists as |artist|}}
-            <div class="card text-white bg-dark mb-3" data-track-id="{{artist._id}}">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="card-body">
-                            <h6 class="card-title">{{artist.name}}</h6>
-                            <p class="card-text"><small class="text-muted">{{join artist.genres ', '}}</small></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{/each}}
-        </div>
-        {{/if}}
-
+        {{#if results}}        
+            {{> searchResults results=results }}
         {{else}}
 
         {{#each tracks as |track|}}
-        <div class="card text-white bg-dark mb-3" data-track-id="{{track._id}}">
-            <div class="row">
-                <div class="col-md-2 text-center m-auto">
-                    <i class="fa-solid fa-play" data-track-file-id="{{track.trackFileId}}"
-                        onclick="playAudio(this)"></i>
-                </div>
-                <div class="col-md-10">
-                    <div class="card-body">
-                        <h6 class="card-title">{{track.name}}</h6>
-                        <p class="card-text"><small class="text-muted">{{track.artistId.name}}</small></p>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 0%" id="progress"></div>
-                        </div>
-                        <audio id="player" hidden="true" preload="none"
-                            src="http://localhost:4000/tracks/play/{{track.trackFileId}}"></audio>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {{> trackCard track=track }}
         {{/each}}
 
         {{/if}}
     </div>
 </section>
+
+<!-- Modal -->
+<form action="/profile/playlists/track" method="post">
+    <div class="modal fade" id="showPlaylists" tabindex="-1" aria-labelledby="showPlaylists" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showPlaylists">Tus playlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{#if playlists}}
+                    <div class="list-group">
+                        {{#each playlists as |playlist|}}
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" name="playlistId" type="checkbox"
+                                value="{{playlist._id}}">
+                            {{playlist.name}}
+                        </label>
+                        {{/each}}
+                        <input type="hidden" name="trackId" id="trackId">
+                    </div>
+                    {{else}}
+                    <a class="btn btn-primary" href="/profile/playlists/new">Crear playlist</a>
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="/js/main.js"></script>

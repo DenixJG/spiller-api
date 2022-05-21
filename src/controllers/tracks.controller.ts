@@ -9,6 +9,7 @@ import { mongo } from 'mongoose';
 import Track, { ITrack } from '../models/Track';
 import Artist, { IArtist } from '../models/Artist';
 import User, { IUser } from '../models/User';
+import Playlist from '../models/Playlist';
 
 /**
  * Renderiza la vista de todos los tracks
@@ -19,7 +20,8 @@ import User, { IUser } from '../models/User';
 export async function renderTracks(req: Request, res: Response) {
     res.render('tracks/list', {
         title: 'Canciones',
-        tracks: await Track.find().populate('artistId', 'name', Artist).lean()
+        tracks: await Track.find().populate('artistId', 'name', Artist).lean(),
+        playlists: await Playlist.find({ userId: req?.session?.user?._id }).lean()
     });
 }
 
