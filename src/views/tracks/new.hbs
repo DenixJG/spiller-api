@@ -1,0 +1,79 @@
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="card shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Nueva Canci&oacute;n</h1>
+                        <form method="post" action="/tracks/new" enctype="multipart/form-data" class="needs-validation" novalidate=""
+                            autocomplete="off">
+                            {{!-- Nombre --}}
+                            <div class="mb-3">
+                                <label class="mb- text-muted" for="title">Nombre</label>
+                                <input id="title" type="text" class="form-control" name="title" value="" required
+                                    autofocus>
+                                <div class="invalid-feedback">
+                                    Nombre requerido.
+                                </div>
+                            </div>
+
+                            {{!-- Duracion en segundos --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="duration">Duraci&oacute;n (Segundos)</label>
+                                </div>
+                                <input id="duration" type="number" class="form-control" name="duration" required>
+                                <div class="invalid-feedback">
+                                    Duraci&oacute;n requerida.
+                                </div>
+                            </div>
+
+                            {{!-- Nombre del Artista --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="artist">Artista</label>
+                                </div>
+                                {{#if roles.admin}}
+                                <input id="artist" type="text" class="form-control" name="artist" required>
+                                {{else}}
+                                <input id="artist" type="text" class="form-control" name="artist" required
+                                    readonly="true" value="{{artist.name}}">
+                                {{/if}}
+                                <div class="invalid-feedback">
+                                    Artista requerido.
+                                </div>
+                            </div>
+
+                            {{!-- Subir archivos --}}
+                            <div class="mb-3">
+                                <div class="mb-1 w-100">
+                                    <label class="text-muted" for="track">Fichero MP3</label>
+                                </div>
+                                <input id="trackfile" type="file" class="form-control" name="trackfile">
+                                <div class="invalid-feedback">
+                                    Artista requerido.
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-check">
+                                    <input type="checkbox" name="terms" id="terms" class="form-check-input"
+                                        required="true">
+                                    <label for="remember" class="form-check-label">Aceptar los terminos y
+                                        condiciones.</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn btn-primary ms-auto">
+                                    Guardar
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/validate-form.js"></script>

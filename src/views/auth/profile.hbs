@@ -1,0 +1,86 @@
+<section class="h-100">
+    <div class="container h-100 my-5">
+        <div class="card">
+            <div class="card-header bg-info bg-gradient text-white">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Bienvenido a tu perfil <b class="text-capitalize">{{user.username}}</b></h5>
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    {{!-- Correo --}}
+                    <div class="col-1">
+                        <p>Correo:</p>
+                    </div>
+                    <div class="col-11">
+                        <span>{{user.email}}</span>
+                    </div>
+
+                    {{!-- Rol --}}
+                    <div class="col-1">
+                        <p>Mi rol:</p>
+                    </div>
+                    <div class="col-11">
+                        {{#if role.isAdmin}} <span>Administrador</span>{{/if}}
+                        {{#if role.isArtist}} <span>Artista</span> {{/if}}
+                        {{#if role.isUser}} <span>Usuario</span> {{/if}}
+                    </div>
+                </div>
+            </div>
+            {{#unless role.isArtist}}
+            <div class="card-footer text-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#artistModal">
+                    Convertirse en artista
+                </button>
+            </div>
+            {{/unless}}
+        </div>
+    </div>
+</section>
+
+<!-- Modal -->
+<div class="modal fade" id="artistModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="artistModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="artistModalLabel">Nuevo Artista</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/artists/new" method="post" class="needs-validation" novalidate="" autocomplete="off">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="name">Nombre Art&iacute;stico</label>
+                        <input id="name" type="text" class="form-control" name="name" required autofocus>
+                        <div class="invalid-feedback">
+                            Nombre art&iacute;stico no v&aacute;lido.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="genres">Generos M&uacute;sicales</label>
+                        <input id="genres" type="text" class="form-control" name="genres" pattern="^[a-zA-Z]+(, [a-zA-Z]+)*$"
+                            placeholder="Ej. Rock, Pop, Metal" required autofocus>
+                        <div class="invalid-feedback">
+                            Generos no v&aacute;lidos.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="userEmail">Usuario Vinculado</label>
+                        <input id="userEmail" readonly="true" type="text" class="form-control" name="userEmail"
+                            value="{{user.email}}" required autofocus>
+                    </div>
+                    <div class="mb-3">
+                        <input id="userId" type="hidden" readonly="true" class="form-control" name="userId"
+                            value="{{user._id}}" required autofocus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/js/validate-form.js"></script>

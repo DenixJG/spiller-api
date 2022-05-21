@@ -1,0 +1,54 @@
+{
+  "name": "spiller-api",
+  "version": "1.0.0",
+  "description": "- [Pedro Jorquera Hoyas](https://github.com/pedrojorquera)\r - [Rafael Ionut Popescu](https://github.com/DenixJG)",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx tsc && node ./dist/index.js",
+    "clear": "npx rimraf ./dist",
+    "dev": "nodemon ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DenixJG/spiller-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DenixJG/spiller-api/issues"
+  },
+  "homepage": "https://github.com/DenixJG/spiller-api#readme",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/connect-flash": "^0.0.37",
+    "@types/cookie-parser": "^1.4.3",
+    "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
+    "@types/handlebars-helpers": "^0.5.3",
+    "@types/jsonwebtoken": "^8.5.8",
+    "@types/morgan": "^1.9.3",
+    "@types/multer": "^1.4.7",
+    "dotenv": "^16.0.1",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-handlebars": "^6.0.5",
+    "express-session": "^1.17.3",
+    "handlebars-helpers": "^0.9.8",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "ts-node": "^10.7.0",
+    "winston": "^3.7.2"
+  }
+}

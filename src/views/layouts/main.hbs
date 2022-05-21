@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    {{!-- BOOTSTRAP 5 --}}
+    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css" type="text/css">
+    {{!-- FONTAWESOME --}}
+    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+    {{!-- STYLES --}}
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+
+    {{>navigation}}
+    {{>message}}
+    <main class="container">
+        {{{ body }}}
+    </main>
+
+    {{!-- POPPER --}}
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    {{!-- BOOTSTRAP 5 JS --}}
+    <script src="/vendor/bootstrap/js/bootstrap.min.js"></script>
+    {{!-- PERSONAL SCRIPT --}}
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

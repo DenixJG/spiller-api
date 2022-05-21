@@ -1,0 +1,60 @@
+{{#if results.tracks}}
+<div class="tracks-found">
+    <h3>Canciones encontradas</h3>
+    <div class="dropdown-divider"></div>
+    {{#each results.tracks as |track|}}
+    <div class="card text-white bg-dark mb-3" data-track-id="{{track._id}}">
+        <div class="row">
+            <div class="col-md-1 text-center m-auto">
+                <i class="fa-solid fa-play" data-track-file-id="{{track.trackFileId}}" onclick="playAudio(this)"></i>
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h6 class="card-title">{{track.name}}</h6>
+                    <p class="card-text"><small class="text-muted">{{track.artistId.name}}</small></p>
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" style="width: 0%" id="progress"></div>
+                    </div>
+                    <audio id="player" hidden="true" preload="none"
+                        src="http://localhost:4000/tracks/play/{{track.trackFileId}}"></audio>
+                </div>
+            </div>
+            <div class="col-md-1 text-center m-auto">
+                <div class="dropdown">
+                    <div class="w-50 h-50" role="button" data-track-id="{{track._id}}" id="dropdownMenu"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <li><a class="dropdown-item" data-bs-toggle="modal" data-track-id="{{track._id}}"
+                                onclick="getTrackToAdd(this)" data-bs-target="#showPlaylists" href="#">Agregar a
+                                playlist</a></li>
+                        <li><a class="dropdown-item" href="#">Ver artista</a></li>
+                        <li><a class="dropdown-item" href="#">Ver creditos</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
+
+{{#if results.artists}}
+<div class="artists-found">
+    <h3>Artistas encontrados</h3>
+    <div class="dropdown-divider"></div>
+    {{#each results.artists as |artist|}}
+    <div class="card text-white bg-dark mb-3" data-track-id="{{artist._id}}">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h6 class="card-title">{{artist.name}}</h6>
+                    <p class="card-text"><small class="text-muted">{{join artist.genres ', '}}</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/if}}

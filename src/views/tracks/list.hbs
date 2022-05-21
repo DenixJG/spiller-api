@@ -1,0 +1,56 @@
+<section class="h-100">
+    {{#or role.isAdmin role.isArtist}}
+    <div class="container mt-4">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a href="/tracks/new" class="btn btn-primary">Agregar Canci&oacute;n</a>
+        </div>
+    </div>
+    {{/or}}
+    <div class="container mt-4 p-4">
+        {{#if results}}        
+            {{> searchResults results=results }}
+        {{else}}
+
+        {{#each tracks as |track|}}
+            {{> trackCard track=track }}
+        {{/each}}
+
+        {{/if}}
+    </div>
+</section>
+
+<!-- Modal -->
+<form action="/profile/playlists/track" method="post">
+    <div class="modal fade" id="showPlaylists" tabindex="-1" aria-labelledby="showPlaylists" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="showPlaylists">Tus playlist</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{#if playlists}}
+                    <div class="list-group">
+                        {{#each playlists as |playlist|}}
+                        <label class="list-group-item">
+                            <input class="form-check-input me-1" name="playlistId" type="checkbox"
+                                value="{{playlist._id}}">
+                            {{playlist.name}}
+                        </label>
+                        {{/each}}
+                        <input type="hidden" name="trackId" id="trackId">
+                    </div>
+                    {{else}}
+                    <a class="btn btn-primary" href="/profile/playlists/new">Crear playlist</a>
+                    {{/if}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="/js/main.js"></script>
