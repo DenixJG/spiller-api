@@ -6,6 +6,35 @@ import Artist, { IArtist } from '../models/Artist';
 import Role from '../models/Role';
 import User, { IUser } from '../models/User';
 
+export async function renderViewArtist(req: Request, res: Response) {
+    try {
+        // Obtener el id del artista desde la url
+        const artistId = req.params.id;
+
+        // Comprobar que el id del artista es un ObjectId valido
+        new mongo.ObjectId(artistId);
+
+        // Buscar el artista en la base de datos
+        const artist = await Artist.findById(artistId).lean();
+
+        if (artist) {
+            res.render('artists/view', {
+                title: 'Artista - ' + artist.name,
+                artist: artist
+            });
+        } else {
+            req.flash('warning_msg', 'El artista no existe');
+            res.redirect('/tracks');
+        }
+
+    } catch (error) {
+        logger.error(`Error al intentar obtener el artista con id: ${req.params.id}`);
+        req.flash('error_msg', 'Error al intentar obtener el artista');
+        res.redirect('/tracks');
+    }
+
+}
+
 /**
  * Crea un nuevo artista, recibe un objeto con los datos del artista para 
  * crearlo en la base de datos y asignar al usuario que lo creó el rol de
