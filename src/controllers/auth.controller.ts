@@ -7,6 +7,7 @@ import User from '../models/User';
 import Role from '../models/Role';
 import logger from '../libs/logger';
 import Artist from '../models/Artist';
+import Track from '../models/Track';
 
 /**
  * Renderiza la vista de inicio de sesión.
@@ -171,7 +172,10 @@ export function logout(req: Request, res: Response) {
  * @param res 
  */
 export async function renderProfile(req: Request, res: Response) {
+    const artist = await Artist.findOne({ userId: req.session.user._id }).lean()
     res.render('auth/profile', {
-        title: 'Perfil'
+        title: 'Perfil',
+        artist: artist,
+        tracks: await Track.find({ artistId: artist?._id}).lean()
     });
 }

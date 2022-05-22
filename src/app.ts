@@ -76,6 +76,7 @@ app.use('/', routes.artistsRoutes);
 app.use('/', routes.playlistsRoutes);
 app.use('/', routes.recordCompanyRoutes);
 app.use('/', routes.aboutRoutes);
+app.use('/', routes.albumRoutes);
 
 // Ficheros estáticos (css, js, imágenes).
 app.use(express.static(path.join(__dirname, 'public')));
