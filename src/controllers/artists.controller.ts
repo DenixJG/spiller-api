@@ -6,6 +6,15 @@ import Artist, { IArtist } from '../models/Artist';
 import Role from '../models/Role';
 import User, { IUser } from '../models/User';
 
+/**
+ * Crea un nuevo artista, recibe un objeto con los datos del artista para 
+ * crearlo en la base de datos y asignar al usuario que lo creó el rol de
+ * artista, guarda en el objeto de `artist` el id del usuario que lo creó.
+ * 
+ * @param req 
+ * @param res 
+ * @returns 
+ */
 export async function createNewArtist(req: Request, res: Response) {
     try {
         // Desestructurar el body
@@ -40,7 +49,9 @@ export async function createNewArtist(req: Request, res: Response) {
         await newArtist.save();
 
         // Set the role for the user
-        const user: IUser | null = await User.findByIdAndUpdate(userId, { $set: { roles: new mongo.ObjectId(role?._id) } });   
+        const user: IUser | null = await User.findByIdAndUpdate(userId, { $set: { roles: new mongo.ObjectId(role?._id) } });
+
+        // TODO: Reiniciar los roles de las variables globales
 
         // Redirect to profile
         req.flash('success_msg', 'Ahora eres un artista, en el proximo inicio de sesión podras subir canciones!');
@@ -51,6 +62,4 @@ export async function createNewArtist(req: Request, res: Response) {
         req.flash('error_msg', 'Error al crear el artista');
         res.redirect('/profile');
     }
-
-
 }

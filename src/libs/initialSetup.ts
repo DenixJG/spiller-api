@@ -6,6 +6,8 @@ import { config } from '../config';
 import User from '../models/User';
 import Role from '../models/Role';
 
+// TODO: Revisar porque no se le asigna el rol de administrador la primera vez que se crea un usuario.
+
 /**
  * Carga en la base de datos los roles iniciales.
  * 

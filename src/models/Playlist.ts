@@ -1,5 +1,8 @@
 import { Schema, model, Document } from 'mongoose';
 
+/**
+ * Interfaz de una playlist.
+ */
 export interface IPlaylist extends Document {
     name: string;
     description?: string;
@@ -9,6 +12,9 @@ export interface IPlaylist extends Document {
     tracks?: Array<Schema.Types.ObjectId | string>;
 }
 
+/**
+ * Esquema de playlist, define la estrucutra de una playlist en la base de datos.
+ */
 const PlaylistSchema = new Schema<IPlaylist>({
     name: { type: String, required: true },
     description: { type: String, required: false, default: '' },

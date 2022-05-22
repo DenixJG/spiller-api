@@ -55,4 +55,3 @@ export async function search(req: Request, res: Response) {
         logger.error(`Error al buscar: ${error}`);
     }
 }
-

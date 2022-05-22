@@ -8,7 +8,6 @@ import { mongo } from 'mongoose';
 // Imports de los modelos
 import Track, { ITrack } from '../models/Track';
 import Artist, { IArtist } from '../models/Artist';
-import User, { IUser } from '../models/User';
 import Playlist from '../models/Playlist';
 
 /**
@@ -126,16 +125,18 @@ export async function newTrack(req: Request, res: Response) {
  * @returns 
  */
 export function streamTrackFile(req: Request, res: Response) {
-    // Get the track file id from the url
+    // Obtener el id del archivo desde la url
     const { id } = req.params;
 
-    // Cast the id to ObjectId
+    // Castear el id a ObjectId
     try {
         new mongo.ObjectId(id);
     } catch (err) {
+        // TODO: Hacer una buena respuesta para el error
         return res.status(400).json({ message: 'Invalid track file id' });
     }
 
+    // Establecer los headers para el cliente.
     res.set('Content-Type', 'audio/mp3');
     res.set('Acept-Ranges', 'bytes');
 
@@ -143,14 +144,17 @@ export function streamTrackFile(req: Request, res: Response) {
 
     let downloadStream = bucket.openDownloadStream(new mongo.ObjectId(id));
 
+    // Cuando se envia datos,
     downloadStream.on('data', (chunk) => {
         res.write(chunk);
     });
 
+    // Cuando termina de enviar los datos,
     downloadStream.on('end', () => {
         res.end();
     });
 
+    // Cuando ocurre un error.
     downloadStream.on('error', (err) => {
         logger.error(`Error al descargar el archivo: ${err}`);
         res.status(500).json({ message: err.message });

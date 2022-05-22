@@ -2,6 +2,9 @@ import { Schema, Model, Document, model } from 'mongoose';
 import bcrypt from 'bcryptjs';
 import Role from './Role';
 
+/**
+ * Esquema de usuario, define la estrucutra de un usuario en la base de datos.
+ */
 const UserSchema = new Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, requiresd: true, unique: true },
@@ -11,6 +14,9 @@ const UserSchema = new Schema({
     ]
 }, { timestamps: true });
 
+/**
+ * Interfaz de usuario.
+ */
 export interface IUser extends Document {
     username: string,
     email: string,
@@ -43,7 +49,7 @@ UserSchema.statics.encryptPassword = async (password: string) => {
 /**
  * Compara la clave con la clave encriptada.
  * 
- * @param password La cla que se desea comparar
+ * @param password La clave que se desea comparar
  * @param hash La clave encriptada
  * @returns True si las claves coinciden, false en caso contrario.
  */
@@ -51,18 +57,36 @@ UserSchema.statics.comparePassword = async (password: string, hash: string) => {
     return await bcrypt.compare(password, hash);
 }
 
+/**
+ * Comprueba si el rol del usuario es 'admin'.
+ * 
+ * @param user Usuario que se desea comprobar.
+ * @returns True si el usuario es 'admin', false en caso contrario.
+ */
 UserSchema.statics.isAdmin = async (user: IUser) => {
     if (!user) { return false; }
     const roles = await Role.find({ _id: { $in: user.roles } });
     return roles.some(role => role.name === 'admin');
 }
 
+/**
+ * Comprueba si el rol del usuario es 'artist'.
+ * 
+ * @param user Ususario que se desea comprobar si es artista.
+ * @returns True si el usuario es 'artist', false en caso contrario.
+ */
 UserSchema.statics.isArtist = async (user: IUser) => {
     if (!user) { return false; }
     const roles = await Role.find({ _id: { $in: user.roles } });
     return roles.some(role => role.name === 'artist');
 }
 
+/**
+ * Comprueba si el rol del usuario es 'user'.
+ * 
+ * @param user Usuario que se desea comprobar si es usuario.
+ * @returns True si el usuario es 'user', false en caso contrario.
+ */
 UserSchema.statics.isUser = async (user: IUser) => {
     if (!user) { return false; }
     const roles = await Role.find({ _id: { $in: user.roles } });

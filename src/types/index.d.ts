@@ -1,3 +1,7 @@
+/**
+ * Declarar tipos de datos personalizados para ciertas variables de la aplicación. 
+ */
+
 import { IUser } from "../models/User";
 import session from "express-session";
 
@@ -15,6 +19,6 @@ declare global {
         interface Request {
             user: IUser;
             userId: string;
-        }        
+        }
     }
 }
