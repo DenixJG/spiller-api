@@ -4,6 +4,7 @@ import tracksRoutes from './tracks.routes';
 import artistsRoutes from './artists.routes';
 import playlistsRoutes from './playlists.routes';
 import aboutRoutes from './about.routes';
+import recordCompanyRoutes from './recordCompany.routes';
 
 export {
     indexRoute,
@@ -11,5 +12,6 @@ export {
     tracksRoutes,
     artistsRoutes,
     playlistsRoutes,
+    recordCompanyRoutes,
     aboutRoutes
 }

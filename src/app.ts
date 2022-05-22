@@ -74,6 +74,7 @@ app.use('/', routes.authRoutes);
 app.use('/', routes.tracksRoutes);
 app.use('/', routes.artistsRoutes);
 app.use('/', routes.playlistsRoutes);
+app.use('/', routes.recordCompanyRoutes);
 app.use('/', routes.aboutRoutes);
 
 // Ficheros estáticos (css, js, imágenes).

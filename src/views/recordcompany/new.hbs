@@ -1,0 +1,49 @@
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-sm-center h-100">
+            <div class="col-xxl-4 col-xl-5 col-lg-5 col-md-7 col-sm-9">
+                <div class="card shadow-lg my-5">
+                    <div class="card-body p-5">
+                        <h1 class="fs-4 card-title fw-bold mb-4">Nueva Discogr&aacute;fica</h1>
+                        <form method="post" action="/recordcompany/new" class="needs-validation" novalidate=""
+                            autocomplete="off">
+                            {{!-- Nombre --}}
+                            <div class="mb-3">
+                                <label class="mb- text-muted" for="name">Nombre</label>
+                                <input id="name" type="text" class="form-control" name="name" value="" required
+                                    autofocus>
+                                <div class="invalid-feedback">
+                                    Nombre requerido.
+                                </div>
+                            </div>
+
+                            {{!-- Los artistas que pertenecen a esta discográfica --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="artists">Artistas</label>
+                                </div>
+                                <input type = "text" class="form-control" name="artistsId" id="artists"></input>
+                            </div>
+
+                            {{!-- Canciones que pertenecen a esta discográfica --}}
+                            <div class="mb-3">
+                                <div class="mb- w-100">
+                                    <label class="text-muted" for="tracksId">Canciones</label>
+                                </div>
+                                <input type = "text" class="form-control" name="tracksId" id="tracks"></input>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <button type="submit" class="btn btn-primary ms-auto">
+                                    Crear
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/js/validate-form.js"></script>

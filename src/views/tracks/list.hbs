@@ -1,18 +1,18 @@
 <section class="h-100">
     {{#or role.isAdmin role.isArtist}}
     <div class="container mt-4">
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <a href="/tracks/new" class="btn btn-primary">Agregar Canci&oacute;n</a>
+        <div class="d-grid gap-2 col-1 d-flex">
+            <a href="/tracks/new" class="btn btn-success ml-auto rounded-circle"><i class="fa-solid fa-plus"></i></a>
         </div>
     </div>
     {{/or}}
     <div class="container mt-4 p-4">
-        {{#if results}}        
-            {{> searchResults results=results }}
+        {{#if results}}
+        {{> searchResults results=results }}
         {{else}}
 
         {{#each tracks as |track|}}
-            {{> trackCard track=track }}
+        {{> trackCard track=track }}
         {{/each}}
 
         {{/if}}
