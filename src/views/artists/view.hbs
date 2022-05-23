@@ -1,1 +1,43 @@
-<p>Detalles de {{artist.name}}</p>
+<div class="container my-5">
+    <div class="card my-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-auto">
+                    <h5 class="card-title">
+                        {{artist.name}}
+                    </h5>
+                </div>
+                <div class="col-auto">
+                    {{#each artist.genres as |genre|}}
+                    <span class="badge bg-primary">{{genre}}</span>
+                    {{/each}}
+                </div>
+            </div>
+            <div class="mb-4">
+                <h6 class="card-subtitle mt-3 mb-2 text-muted">Albums</h6>
+                <div class="dropdown-divider"></div>
+                {{#if albums}}
+                <ul class="list-group list-group-flush">
+                    {{#each albums as |album|}}
+                    <a class="text-decoration-none rounded-3" href="/artists/albums/{{album._id}}">
+                        <li class="list-group-item bg-primary bg-gradient text-light shadow-lg">{{album.name}}</li>
+                    </a>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <p class="text">El artista no tiene ningun album</p>
+                {{/if}}
+            </div>
+            <div class="mb-4">
+                <h6 class="card-subtitle mt-3 mb-2 text-muted">Canciones</h6>
+                <div class="dropdown-divider"></div>
+                {{#if tracks}}
+                {{> trackCard tracks=tracks playlists=playlists }}
+                {{else}}
+                <p>El artista no tiene canciones</p>
+                {{/if}}
+            </div>
+
+        </div>
+    </div>
+</div>

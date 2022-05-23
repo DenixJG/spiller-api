@@ -1,7 +1,42 @@
 import { Request, Response } from 'express';
+import { mongo } from 'mongoose';
 import logger from '../libs/logger';
 import Album, { IAlbum } from '../models/Album';
-import Artist from '../models/Artist';
+import Playlist from '../models/Playlist';
+
+/**
+ * Renderiza la vista de detalles de un album.
+ * 
+ * @param req 
+ * @param res 
+ */
+export async function renderViewAlbum(req: Request, res: Response) {
+    try {
+        const id = new mongo.ObjectId(req.params.id);
+
+        res.render('album/view', {
+            title: 'Album',
+            album: await Album.findById(id).populate({
+                path: 'artistId',
+                options: { lean: true },
+            }).populate({
+                path: 'tracks',
+                options: { lean: true },
+                populate: {
+                    path: 'artistId',
+                    options: { lean: true },
+                }
+            }).lean(),
+            playlists: await Playlist.find({ userId: req?.session?.user?._id }).lean(),
+        });
+
+    } catch (error) {
+        logger.error(`Error al buscar album: ${error}`);
+        req.flash('warning_msg', 'Album no encontrado');
+        res.redirect('/');
+    }
+
+}
 
 /**
  * Crea un nuevo album.

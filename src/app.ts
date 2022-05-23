@@ -14,6 +14,7 @@ import * as routes from './routes';
 
 // Importar librerias
 import { createAdmin, createRoles } from './libs/initialSetup';
+import logger from './libs/logger';
 
 const app: Application = express();
 
@@ -88,6 +89,7 @@ app.use((req, res) => {
 
 // Errores 500
 app.use((err: ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) => {
+    logger.error(`Error: ${err}`);
     res.status(500).render('errors/500');
 });
 

@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
 import { mongo } from 'mongoose';
 import logger from '../libs/logger';
+import Album from '../models/Album';
 
 import Artist, { IArtist } from '../models/Artist';
+import Playlist from '../models/Playlist';
 import Role from '../models/Role';
+import Track from '../models/Track';
 import User, { IUser } from '../models/User';
 
 export async function renderViewArtist(req: Request, res: Response) {
@@ -15,12 +18,15 @@ export async function renderViewArtist(req: Request, res: Response) {
         new mongo.ObjectId(artistId);
 
         // Buscar el artista en la base de datos
-        const artist = await Artist.findById(artistId).lean();
+        const artist = await Artist.findById(artistId).lean();       
 
         if (artist) {
             res.render('artists/view', {
                 title: 'Artista - ' + artist.name,
-                artist: artist
+                artist: artist,
+                albums: await Album.find({ artistId: artistId }).lean(),
+                tracks: await Track.find({ artistId: artistId }).populate('artistId', 'name', Artist).sort({ createdAt: -1 }).limit(5).lean(),
+                playlists: await Playlist.find({ userId: req?.session?.user?._id }).lean()
             });
         } else {
             req.flash('warning_msg', 'El artista no existe');

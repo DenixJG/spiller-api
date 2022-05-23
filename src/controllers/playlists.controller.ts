@@ -29,7 +29,14 @@ export async function renderViewPlaylist(req: Request, res: Response) {
 
         res.render('playlist/view', {
             title: 'Playlist',
-            playlist: await Playlist.findById(id).lean()
+            playlist: await Playlist.findById(id).populate({
+                path: 'tracks',
+                options: { lean: true },
+                populate: {
+                    path: 'artistId',
+                    options: { lean: true }
+                }
+            }).lean()
         });
 
     } catch (error) {
@@ -112,6 +119,7 @@ export async function addTrackToPlaylist(req: Request, res: Response) {
     } catch (error) {
         logger.error(`Error al agregar track a playlist: ${error}`);
         req.flash('error_msg', `${error}`);
+        res.redirect('/profile/playlists');
     }
 }
 
