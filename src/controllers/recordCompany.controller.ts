@@ -1,3 +1,7 @@
+/**
+ * TODO: Son canciones sin copiright, no creo que deba tener una Discografica asociada a un artista.
+ * @deprecated No se usa en la aplicación.
+ */
 import { Request, Response } from 'express';
 import RecordCompany, { IRecordCompany } from '../models/RecordCompany';
 import logger from '../libs/logger';
@@ -9,7 +13,7 @@ import logger from '../libs/logger';
  * @param res 
  */
 export function renderRecordCompany(req: Request, res: Response) {
-    res.render('recordcompany/list', {
+    res.render('record-company/list', {
         title: 'Record Company'
     });
 }
@@ -21,7 +25,7 @@ export function renderRecordCompany(req: Request, res: Response) {
  * @param res 
  */
 export function renderNewRecordCompany(req: Request, res: Response) {
-    res.render('recordcompany/new', {
+    res.render('record-company/new', {
         title: 'New Record Company'
     });
 }
@@ -33,32 +37,31 @@ export function renderNewRecordCompany(req: Request, res: Response) {
  * @param res 
  */
 export async function createRecordCompany(req: Request, res: Response) {
-    console.log(req.body);
-      
     try {
-            // Desestrucutrar el body
-            const { name, artistsId, tracksId } = req.body;
-    
-            // Crear el objeto
-            const recordCompany: IRecordCompany = new RecordCompany({
-                name: name,
-                totalArtists: Array.isArray(artistsId)?artistsId.length:1,
-                artistsId: artistsId,
-                tracksId: tracksId
-            });
-            // Guardar el objeto
-            const savedRecordCompany = await recordCompany.save();
-    
-            if (recordCompany) {
-                req.flash('success_msg', 'Record Company creada');
-                res.redirect('/recordcompany');
-            } else {
-                throw new Error('Record company no creada');
-            }
-    
-        } catch (error) {
-            logger.error(`Error al crear Record Company: ${error}`);
-            req.flash('warning_msg', 'Error al crear la Record Company');
-            res.redirect('/recordcompany/new');
+        // Desestrucutrar el body
+        const { name, artistsId, tracksId } = req.body;
+
+        // Crear el objeto
+        const recordCompany: IRecordCompany = new RecordCompany({
+            name: name,
+            totalArtists: Array.isArray(artistsId) ? artistsId.length : 1,
+            artistsId: artistsId,
+            tracksId: tracksId
+        });
+
+        // Guardar el objeto
+        const savedRecordCompany = await recordCompany.save();
+
+        if (savedRecordCompany) {
+            req.flash('success_msg', 'Record Company creada');
+            res.redirect('/recordcompany');
+        } else {
+            throw new Error('Record company no creada');
         }
+
+    } catch (error) {
+        logger.error(`Error al crear Record Company: ${error}`);
+        req.flash('warning_msg', 'Error al crear la Record Company');
+        res.redirect('/recordcompany/new');
+    }
 }

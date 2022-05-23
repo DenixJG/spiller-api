@@ -74,7 +74,7 @@ app.use('/', routes.authRoutes);
 app.use('/', routes.tracksRoutes);
 app.use('/', routes.artistsRoutes);
 app.use('/', routes.playlistsRoutes);
-app.use('/', routes.recordCompanyRoutes);
+// app.use('/', routes.recordCompanyRoutes); // No se usa
 app.use('/', routes.aboutRoutes);
 app.use('/', routes.albumRoutes);
 
