@@ -4,6 +4,12 @@ import logger from '../libs/logger';
 import Playlist, { IPlaylist } from '../models/Playlist';
 import Track, { ITrack } from '../models/Track';
 
+/**
+ * Renderiza la vista para ver todas las playlists del usuario.
+ * 
+ * @param req 
+ * @param res 
+ */
 export async function renderPlaylists(req: Request, res: Response) {
     res.render('playlist/list', {
         title: 'Tus playlists',
@@ -11,13 +17,26 @@ export async function renderPlaylists(req: Request, res: Response) {
     });
 }
 
+/**
+ * Renderiza la vista para ver una playlist especifica.
+ * 
+ * @param req 
+ * @param res 
+ */
 export async function renderViewPlaylist(req: Request, res: Response) {
     try {
         const id = new mongo.ObjectId(req.params.id);
 
         res.render('playlist/view', {
             title: 'Playlist',
-            playlist: await Playlist.findById(id).lean()
+            playlist: await Playlist.findById(id).populate({
+                path: 'tracks',
+                options: { lean: true },
+                populate: {
+                    path: 'artistId',
+                    options: { lean: true }
+                }
+            }).lean()
         });
 
     } catch (error) {
@@ -27,12 +46,24 @@ export async function renderViewPlaylist(req: Request, res: Response) {
 
 }
 
+/**
+ * Renderiza la vista para crear una nueva playlist.
+ * 
+ * @param req 
+ * @param res 
+ */
 export function renderNewPlaylist(req: Request, res: Response) {
     res.render('playlist/new', {
         title: 'Crear playlist',
     });
 }
 
+/**
+ * Crear una nueva playlist.
+ * 
+ * @param req 
+ * @param res 
+ */
 export async function createPlaylist(req: Request, res: Response) {
     try {
         // Desestrucutrar el body
@@ -62,8 +93,13 @@ export async function createPlaylist(req: Request, res: Response) {
     }
 }
 
+/**
+ * Agregar un track a una playlist.
+ * 
+ * @param req 
+ * @param res 
+ */
 export async function addTrackToPlaylist(req: Request, res: Response) {
-
     try {
         const { playlistId, trackId } = req.body;
 
@@ -83,6 +119,7 @@ export async function addTrackToPlaylist(req: Request, res: Response) {
     } catch (error) {
         logger.error(`Error al agregar track a playlist: ${error}`);
         req.flash('error_msg', `${error}`);
+        res.redirect('/profile/playlists');
     }
 }
 
@@ -123,4 +160,3 @@ async function addToPlaylist(playlistId: any, trackId: any, req: Request, res: R
         throw new Error('Playlist no encontrada');
     }
 }
-

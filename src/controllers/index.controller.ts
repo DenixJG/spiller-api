@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import logger from '../libs/logger';
 import Artist, { IArtist } from '../models/Artist';
+import Playlist from '../models/Playlist';
 import Track, { ITrack } from '../models/Track';
 
 /**
@@ -43,7 +44,8 @@ export async function search(req: Request, res: Response) {
 
         const results: Object = {
             tracks: tracks,
-            artists: artists
+            artists: artists,
+            playlists: await Playlist.find({ userId: req?.session?.user?._id }).lean()
         }
 
         res.render('tracks/list', {
@@ -55,4 +57,3 @@ export async function search(req: Request, res: Response) {
         logger.error(`Error al buscar: ${error}`);
     }
 }
-

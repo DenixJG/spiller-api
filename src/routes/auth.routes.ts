@@ -13,16 +13,39 @@ import {
 
 const router: Router = Router();
 
+/**
+ * GET /login - Renderiza la página de "Login"
+ */
 router.get('/login', renderLogin);
+
+/**
+ * POST /login - Inicia sesión
+ */
 router.post('/login', login);
 
+/**
+ * GET /signup - Renderiza la página de "Registro"
+ */
 router.get('/signup', renderSignup);
-router.post('/signup', [ checkDuplicateUsernameOrEmail, checkRolesExist ], signup);
 
+/**
+ * POST /signup - Registra un nuevo usuario, verificando que no exista un usuario con el mismo nombre de usuario o correo electrónico.
+ */
+router.post('/signup', [checkDuplicateUsernameOrEmail, checkRolesExist], signup);
+
+/**
+ * GET /forgot - Renderiza la página de "Olvidé mi contraseña"
+ */
 router.get('/forgot', renderForgot);
 
-router.get('/login/logout', [ verifyToken ], logout);
+/**
+ * GET /login/logout - Cierra la sesión actual, verificando que el usuario esté autenticado.
+ */
+router.get('/login/logout', [verifyToken], logout);
 
-router.get('/profile', [ verifyToken ], renderProfile);
+/**
+ * GET /profile - Renderiza la página de "Perfil", verificando que el usuario esté autenticado.
+ */
+router.get('/profile', [verifyToken], renderProfile);
 
 export default router;

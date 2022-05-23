@@ -9,19 +9,20 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import hbsHelpers from 'handlebars-helpers';
 
-// Routes imports
+// Importar rutas
 import * as routes from './routes';
 
-// Import libs
+// Importar librerias
 import { createAdmin, createRoles } from './libs/initialSetup';
+import logger from './libs/logger';
 
 const app: Application = express();
 
-// Database initial setup
+// Configuracion inicial de la base de datos.
 createRoles();
 createAdmin();
 
-// Settings
+// Ajustes de la aplicación
 app.set('port', config.PORT);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', engine({
@@ -58,7 +59,7 @@ app.use(
 );
 app.use(flash()); // Para mostrar mensajes de flash
 
-// Global variables
+// Variables globales
 app.use((req, res, next) => {
     res.locals.info_msg = req.flash('info_msg');
     res.locals.warning_msg = req.flash('warning_msg');
@@ -70,24 +71,27 @@ app.use((req, res, next) => {
     next();
 });
 
-// Routes
+// Rutas
 app.use('/', routes.indexRoute);
 app.use('/', routes.authRoutes);
 app.use('/', routes.tracksRoutes);
 app.use('/', routes.artistsRoutes);
 app.use('/', routes.playlistsRoutes);
+// app.use('/', routes.recordCompanyRoutes); // No se usa
 app.use('/', routes.aboutRoutes);
+app.use('/', routes.albumRoutes);
 
-// Static files
+// Ficheros estáticos (css, js, imágenes).
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Error handling for 404
+// Errores 404
 app.use((req, res) => {
     res.status(404).render('errors/404');
 });
 
-// Error handling for 500
+// Errores 500
 app.use((err: ErrorRequestHandler, req: express.Request, res: express.Response, next: NextFunction) => {
+    logger.error(`Error: ${err}`);
     res.status(500).render('errors/500');
 });
 

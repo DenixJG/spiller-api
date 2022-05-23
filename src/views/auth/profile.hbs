@@ -1,11 +1,11 @@
 <section class="h-100">
     <div class="container h-100 my-5">
-        <div class="card">
+        <div class="card my-4">
             <div class="card-header bg-info bg-gradient text-white">
-                <i class="fas fa-user"></i>
+                <h5 class="card-title"><i class="fas fa-user mx-1"></i> ¡Bienvenido a tu perfil!</h5>
             </div>
             <div class="card-body">
-                <h5 class="card-title">Bienvenido a tu perfil <b class="text-capitalize">{{user.username}}</b></h5>
+                <h5 class="card-title"><b class="text-capitalize">{{user.username}}</b></h5>
                 <div class="dropdown-divider"></div>
                 <div class="row">
                     {{!-- Correo --}}
@@ -35,6 +35,41 @@
             </div>
             {{/unless}}
         </div>
+        {{#if role.isArtist}}
+        <div class="card">
+            <div class="card-header bg-info bg-gradient text-white">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Tus datos de Artista</h5>
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    {{!-- Nombre artístico --}}
+                    <div class="col-1">
+                        <p>Nombre:</p>
+                    </div>
+                    <div class="col-11">
+                        <span>{{artist.name}}</span>
+                    </div>
+
+                    {{!-- Generos Músicales --}}
+                    <div class="col-1">
+                        <p>Generos:</p>
+                    </div>
+                    <div class="col-11">
+                        {{#each artist.genres as |genre|}}
+                        <span class="badge bg-primary">{{genre}}</span>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer text-center">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#albumModal">
+                    Crear Album
+                </button>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </section>
 
@@ -58,8 +93,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="mb-2 text-muted" for="genres">Generos M&uacute;sicales</label>
-                        <input id="genres" type="text" class="form-control" name="genres" pattern="^[a-zA-Z]+(, [a-zA-Z]+)*$"
-                            placeholder="Ej. Rock, Pop, Metal" required autofocus>
+                        <input id="genres" type="text" class="form-control" name="genres"
+                            pattern="^[a-zA-Z]+(, [a-zA-Z]+)*$" placeholder="Ej. Rock, Pop, Metal" required autofocus>
                         <div class="invalid-feedback">
                             Generos no v&aacute;lidos.
                         </div>
@@ -72,6 +107,57 @@
                     <div class="mb-3">
                         <input id="userId" type="hidden" readonly="true" class="form-control" name="userId"
                             value="{{user._id}}" required autofocus>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Album -->
+<div class="modal fade" id="albumModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="albumModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="albumModalLabel">Nuevo Album</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/artists/albums/new" method="post" class="needs-validation" novalidate="" autocomplete="off">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="name">Nombre Album</label>
+                        <input id="name" type="text" class="form-control" name="name" required autofocus>
+                        <div class="invalid-feedback">
+                            Nombre no v&aacute;lido.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="releaseDate">Fecha de Lanzamiento</label>
+                        <input id="releaseDate" type="date" class="form-control" name="releaseDate" required autofocus>
+                        <div class="invalid-feedback">
+                            Fecha no v&aacute;lida.
+                        </div>
+                    </div>
+                    <div class="mb-3">                        
+                        <input class="form-control" id="artistId" type="hidden" value="{{artist._id}}" name="artistId"
+                            readonly="true" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2 text-muted" for="artistId">Canciones</label>
+                        {{#if tracks}}
+                        <select name="tracks" id="tracks" class="form-select" multiple="true">
+                            {{#each tracks as |track|}}
+                            <option value="{{track._id}}">{{track.name}}</option>                            
+                            {{/each}}
+                        </select>
+                        {{else}}
+                        <p>No tienes canciones</p>
+                        {{/if}}
                     </div>
                 </div>
                 <div class="modal-footer">

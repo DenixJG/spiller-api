@@ -63,9 +63,10 @@ export async function verifyToken(req: Request, res: Response, next: NextFunctio
  * @param next 
  */
 export async function isAdminOrArtist(req: Request, res: Response, next: NextFunction) {
+    // TODO: Separar la comprobación de 'artist' y 'admin' en dos funciones.
     try {
         // Obtener el usuario actual de la request.
-        const user = await User.findById(req.userId);    
+        const user = await User.findById(req.userId);
 
         // Comprobamos si se encuentra el usuario.
         if (!user) {
