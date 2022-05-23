@@ -6,9 +6,7 @@ services:
         container_name: mongo_db_server
         environment:
             MONGO_INITDB_ROOT_USERNAME: root
-            MONGO_INITDB_ROOT_PASSWORD: example
-        volumes:
-            - ./mongo-volume/data:/data/db            
+            MONGO_INITDB_ROOT_PASSWORD: example                    
         ports: 
             - 27017:27017
     
@@ -18,7 +16,7 @@ services:
         build:
             dockerfile: ./Dockerfile
         ports: 
-            - 4000:4000
+            - 80:4000
         depends_on:
             - mongo
         environment:
