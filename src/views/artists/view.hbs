@@ -1,9 +1,10 @@
+<!--Inicio del contenedor principal-->
 <div class="container my-5">
     <div class="card my-4">
         <div class="card-body">
             <div class="row">
                 <div class="col-auto">
-                    <h5 class="card-title">
+                    <h5 class="card-title"><!--Titulo: nombre de artista-->
                         {{artist.name}}
                     </h5>
                 </div>
@@ -16,15 +17,15 @@
             <div class="mb-4">
                 <h6 class="card-subtitle mt-3 mb-2 text-muted">Albums</h6>
                 <div class="dropdown-divider"></div>
-                {{#if albums}}
+                {{#if albums}}<!--Si hay albums-->
                 <ul class="list-group list-group-flush">
-                    {{#each albums as |album|}}
+                    {{#each albums as |album|}}<!--Lista de albums-->
                     <a class="text-decoration-none rounded-3" href="/artists/albums/{{album._id}}">
                         <li class="list-group-item bg-primary bg-gradient text-light shadow-lg">{{album.name}}</li>
                     </a>
                     {{/each}}
                 </ul>
-                {{else}}
+                {{else}}<!--Si no hay albums-->
                 <p class="text">El artista no tiene ningun album</p>
                 {{/if}}
             </div>
@@ -41,3 +42,4 @@
         </div>
     </div>
 </div>
+<!--Fin del contenedor principal-->
