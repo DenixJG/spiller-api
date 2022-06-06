@@ -2,32 +2,30 @@ window.onload = function () {
 
 }
 
-// TODO: Cambiar comentarios a español
-
 async function playAudio(context) {
     let timer;
 
-    // Get the offsetparent of the context and get the audio tag
+    // Obtener el offsetparent del contexto y obtener la etiqueta de audio
     let offsetParent = context.offsetParent;
     let audio = offsetParent.getElementsByTagName('audio')[0];
 
-    // If the audio is playing pause it
+    // Pausar el audio si este se esta reproduciendo
     if (!audio.paused) {
         audio.pause();
 
-        // On pause clear the timer
+        // En la pausa el temporizador se resetea a 0
         audio.addEventListener("pause", function (_event) {
             clearTimeout(timer);
         });
 
-        // Remove class from the context
+        // Elimina la clase del contexto
         context.classList.replace('fa-pause', 'fa-play');
         return null;
     }
 
-    // Check if there is another audio tag playing
+    // Comprueba si se está reproduciendo otra etiqueta de audio
     if (checkAudioPause() !== null) {
-        // Pause the audio tag that is playing
+        // Poner en pausa la etiqueta de audio que se está reproduciendo
         let activeAudio = checkAudioPause();
         activeAudio.pause();
 
@@ -36,48 +34,48 @@ async function playAudio(context) {
         });
 
         activeAudio.currentTime = 0;
-        // Find the context of the audio tag that is playing and remove the class
+        // Encuentra el contexto de la etiqueta de audio que se está reproduciendo y elimina la clase
         let activeContext = activeAudio.parentNode.offsetParent.getElementsByTagName('i')[0];
         activeContext.classList.replace('fa-pause', 'fa-play');
     }
 
     try {
-        // Play the audio
+        // Reproducir el audio
         await audio.play();
         console.log('Playing...');
     } catch (err) {
         console.log('Failed to play...' + err);
     }
 
-    // On playing increment the progress bar
+    // En la reproduccion se aumenta la barra de progreso
     audio.addEventListener('playing', function (_event) {
         let duration = _event.target.duration;
         advance(duration, audio);
     });
 
     audio.addEventListener('ended', function (_event) {
-        // Remove the class from the context
+        // Elimina la clase del contexto
         context.classList.replace('fa-pause', 'fa-play');
     });
 
-    // Add class to the context
+    // Añade la clase al contexto
     context.classList.replace('fa-play', 'fa-pause');
 }
 
 /**
- * Check if there is another audio tag playing
+ * Comprueba si se está reproduciendo otra etiqueta de audio
  * 
  * @returns 
  */
 function checkAudioPause() {
-    // Get all the audio tags
+    // Obtenemos todos las etiquetas de las canciones
     let players = document.querySelectorAll('[id=player]');
 
-    // Loop through all the audio tags and check if they are paused
+    // Recorre todas las etiquetas de audio y comprueba si están en pausa
     for (let i = 0; i < players.length; i++) {
-        // If the audio tag is paused
+        // Si la etiqueta de audio esta pausada
         if (!players[i].paused) {
-            // Return the audio tag
+            // Devuelve la etiqueta de audio
             return players[i];
         }
     }
@@ -86,7 +84,7 @@ function checkAudioPause() {
 }
 
 /**
- * Increment the progress bar
+ * Incrementacion de la barra de progreso
  * 
  * @param {*} duration 
  * @param {*} element 
@@ -102,7 +100,7 @@ function advance(duration, element) {
 }
 
 /**
- * Start the timer
+ * Comienza el temporizador
  * 
  * @param {*} duration 
  * @param {*} element 

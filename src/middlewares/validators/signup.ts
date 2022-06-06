@@ -30,14 +30,16 @@ export async function checkDuplicateUsernameOrEmail(req: Request, res: Response,
 
         // Si el usuario exitse, devuelve un error
         if (userEmail) {
-            return res.status(400).json({ message: 'El correo ya existe' });
+            req.flash('info_msg', 'El correo ya existe');
+            res.redirect('/signup');            
+            return;
         }
 
         //  Si el usuario no existe, continua con el siguiente middleware
         next();
     } catch (error) {
-        logger.error(`Error al comprobar duplicidad de usuario o correo: ${error}`);
-        return res.status(500).json({ message: 'Error al comprobar', error });
+        logger.error(`Error al comprobar duplicidad de usuario o correo: ${error}`);        
+        res.redirect('/signup');
     }
 }
 
@@ -54,10 +56,10 @@ export function checkRolesExist(req: Request, res: Response, next: NextFunction)
     if (req.body.roles) {
         // Iteramos por cada rol del usuario
         for (const role of req.body.roles) {
-            // Si el rol no existe en la base de datos, devolvemos un error
-            if (!ROLES.includes(role)) {
+            // Si el rol no existe en la base de datos, asginamos el rol por defecto
+            if (!ROLES.includes(role)) {                
                 logger.warn(`Rol ${role} no existe`);
-                return res.status(400).json({ message: 'Role does not exist' });
+                return;
             }
         }
     }
