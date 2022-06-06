@@ -34,6 +34,7 @@ npm install
 ## 3 - Variables de entorno
 Se pueden usar las siguientes variables de entorno:
 
+ - `NODE_ENV` Define el tipo de entorno de la APP, por defecto `development`.
  - `PORT` Puerto a usar por la aplicación, por defecto `4000`.
  - `MONGODB_URI` URI de conexión para MongoDB.
  - `EXPRESS_SESSION_SECRET` Clave para la sesión de `express`.
@@ -47,6 +48,7 @@ Se puede configurar un fichero `.env` para definir las variables.
 ```txt
 # APP
 PORT=4000
+NODE_ENV=development
 
 #MongoDB
 MONGODB_URI=mongodb://localhost:27017/{dbname}

@@ -4,6 +4,7 @@ config();
 export default {
     // Configuracion de puerto
     PORT: process.env.PORT || 4000,
+    NODE_ENV: process.env.NODE_ENV || 'development',
 
     // Base de datos
     MONGODB_URI: process.env.MONGODB_URI || undefined,
