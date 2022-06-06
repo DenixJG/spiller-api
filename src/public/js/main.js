@@ -91,7 +91,7 @@ function checkAudioPause() {
  */
 function advance(duration, element) {
     let percent = 0;
-    // Get the progress bar
+    // Obtener la barra de progreso
     let progress = element.parentNode.offsetParent.querySelector('[id=progress]');
     increment = 10 / duration
     percent = Math.min(increment * element.currentTime * 10, 100);
