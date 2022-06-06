@@ -20,7 +20,9 @@ export async function checkDuplicateUsernameOrEmail(req: Request, res: Response,
 
         // Si el usuario existe, devolver error
         if (user) {
-            return res.status(400).json({ message: 'El nombre de usuario ya existe' });
+            req.flash('warning_msg', 'El nombre de usuario ya existe');
+            res.redirect('/signup');
+            return;
         }
 
         // Obtener el usuario de la base de datos por el campo email
