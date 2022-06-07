@@ -31,6 +31,22 @@ Para instalar las dependencias del proyecto se debe ejecutar en la raíz del pro
 npm install
 ```
 
+**Iniciar la APP Web**
+
+***ANTES DE INICIAR***: *Tener iniciado el servicio de `mongod` antes de iniciar la APP*
+
+Hay dos comandos que se pueden usar para iniciar el servidor web y empezar a ver como funciona la aplicación.
+
+- Ejecutar sin compilar, ejecuta directamente los ficheros `.ts`.
+    ```
+    npm run dev
+    ```
+
+- Compilar los ficheros `.ts` a `.js`. De esta forma se compila todos los ficheros de TypeScript pero carpetas importantes como pueda ser `public` o `views` no se compilan por lo que hay que moverlas manualmente al directorio de salida, siendo `dist` dicho directorio.
+    ```
+    npm run start
+    ```
+
 ## 3 - Variables de entorno
 Se pueden usar las siguientes variables de entorno:
 
