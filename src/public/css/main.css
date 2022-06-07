@@ -8,3 +8,14 @@
   font-size: 20px;
   line-height: 1.42857;
 }
+
+.landing-background {
+  background-color: rgb(40, 123, 181);
+}
+
+.landing-title {
+  color: rgb(37, 255, 205);
+  margin-top: 10rem;  
+  font-size: 8rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
