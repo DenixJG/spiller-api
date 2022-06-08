@@ -49,10 +49,10 @@ export async function newTrack(req: Request, res: Response) {
     const upload: Multer = multer({
         storage,
         limits: {
-            fields: 4, // Form fields limit
-            fileSize: 1024 * 1024 * 12, // File size limit, default is 12MB
-            files: 1, // Files limit
-            parts: 5 // Parts limit, fields + files
+            fields: 4, // Limite de campos que va a tener el formulario
+            fileSize: 1024 * 1024 * 12, // Tamaño limite del fichero, por defecto es 12MB
+            files: 1, // Limite de ficheros
+            parts: 5 // Limite de partes, estos son la suma de campos y ficheros
         }
     })
 

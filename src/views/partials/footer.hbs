@@ -1,13 +1,17 @@
-<footer class="footer bg-light mt-auto">
+{{!-- Pie de pagina --}}
+<footer class="footer bg-dark mt-auto">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 h-100 text-center text-lg-start my-auto">
                 <ul class="list-inline mb-2">
+                    {{!-- Apartado de about us --}}
                     <li class="list-inline-item"><a href="/about">Sobre nosostros</a></li>
                     <li class="list-inline-item">-</li>                    
+                    {{!-- Apartado de Terms and Conditions --}}
                     <li class="list-inline-item"><a href="/terms">Terminos y condiciones</a></li>
                     <li class="list-inline-item">-</li>
-                    <li class="list-inline-item"><a href="/team">Nuestro equipo</a></li>
+                    {{!-- Apartado de Team --}}
+                    <li class="list-inline-item"><a target="_blank" href="/pdf/manual-de-uso-de-spiller.pdf">Como usar Spiller</a></li>
                 </ul>
                 <p class="text-muted small mb-4 mb-lg-0">&copy; SpillerMusic 2022</p>
             </div>
@@ -16,6 +20,7 @@
                     <li class="list-inline-item me-4">
                         <a href="#"><i class="fa-brands fa-docker"></i></a>
                     </li>
+                    {{!-- Link al repositorio en GitHub --}}
                     <li class="list-inline-item me-4">
                         <a href="https://github.com/DenixJG/spiller-api" target="_blank"><i class="fa-brands fa-github"></i></a>
                     </li>

@@ -3,10 +3,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-auto">
+                    {{!-- Nombre del album --}}
                     <h5 class="card-title">
                         {{album.name}}
                     </h5>
                 </div>
+                {{!-- Fecha de creacion del album --}}
                 <div class="col-12">
                     <h6 class="card-subtitle text-muted fst-italic">{{album.releaseDate}}</h6>                                        
                 </div>
@@ -14,8 +16,10 @@
             <div class="mb-4">
                 <h6 class="card-subtitle mt-3 mb-2 text-muted">Canciones</h6>
                 <div class="dropdown-divider"></div>
+                {{!-- Si el album tiene canciones --}}
                 {{#if album.tracks}}
                 {{> trackCard tracks=album.tracks playlists=playlists }}
+                {{!-- Si el album no tiene canciones --}}
                 {{else}}
                 <p>El album no tiene canciones</p>
                 {{/if}}

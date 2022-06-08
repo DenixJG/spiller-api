@@ -1,16 +1,21 @@
 <div class="container mt-4 p-4">
     {{#if playlists}}
     <div class="row row-cols-1 row-cols-md-3 g-4">
+        {{!-- Recorremos todas las playlist que tenga el usuario y las imprimimos por pantalla --}}
         {{#each playlists as |playlist|}}
         <div class="col">
             <a href="/profile/playlists/{{playlist._id}}" class="text-decoration-none link-info">
                 <div class="card h-100">
                     <div class="card-body">
+                        {{!-- Nombre de la playlist --}}
                         <h5 class="card-title">{{playlist.name}}</h5>
+                        {{!-- Duracion de la playlist --}}
                         <h6 class="card-subtitle small mb-2 text-muted">Duraci&oacute;n: {{playlist.totalDuration}}</h6>
+                        {{!-- Descripcion de la playlist --}}
                         <p class="card-text">{{playlist.description}}</p>
                     </div>
                     <div class="card-footer">
+                        {{!-- Numero total de canciones que contiene la playlist --}}
                         <small class="text-muted"><span>{{playlist.totalTracks}}</span> Canciones</small>
                     </div>
                 </div>
@@ -18,7 +23,8 @@
         </div>
         {{/each}}
     </div>
+    {{!-- Mensaje que saldra en el caso de que el usuario no tenga ninguna playlist --}}
     {{else}}
-    <p>No tienes ninguna <span class="text-muted text-decoration-underline">Playlist</span></p>
+    <p class="href-black">No tienes ninguna <span class="text-muted text-decoration-underline href-black">Playlist</span></p>
     {{/if}}
 </div>

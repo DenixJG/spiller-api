@@ -55,40 +55,40 @@ export async function createNewArtist(req: Request, res: Response) {
         // Desestructurar el body
         const { name, genres, userEmail, userId } = req.body;
 
-        // Find by name an artist
+        // Buscar segun el nombre del artista
         const artist: IArtist | null = await Artist.findOne({ name });
 
-        // If artist exists
+        // Si el artista existe
         if (artist) {
-            // If the artist is not the user
+            // Si el artista no es el usuario
             if (artist.userId.toString() !== userId) {
                 req.flash('warning_msg', 'El artista ya existe');
                 return;
             }
         }
 
-        // Separate genres by comma and trim spaces.
+        // Separar generos por comas
         const genresArray = genres.split(',').map((genre: string) => genre.trim());
 
-        // Create new artist
+        // Crear un nuevo artistas
         const newArtist = new Artist({
             name: name,
             genres: genresArray,
             userId: new mongo.ObjectId(userId)
         });
 
-        // Get the role for artist       
+        // Obtener el rol del artista       
         const role = await Role.findOne({ name: { $in: ['artist'] } });
 
-        // Save artist
+        // Guardar el artista
         await newArtist.save();
 
-        // Set the role for the user
+        // Establecer el rol al usuario
         const user: IUser | null = await User.findByIdAndUpdate(userId, { $set: { roles: new mongo.ObjectId(role?._id) } });
 
         // TODO: Reiniciar los roles de las variables globales
 
-        // Redirect to profile
+        // Redirigir al perfil
         req.flash('success_msg', 'Ahora eres un artista, en el proximo inicio de sesión podras subir canciones!');
         res.redirect('/profile');
 

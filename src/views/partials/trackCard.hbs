@@ -1,3 +1,4 @@
+{{!-- Recorremos la lista de trucks --}}
 {{#each tracks as |track|}}
 <div class="card text-white bg-dark bg-gradient mb-3" data-track-id="{{track._id}}">
     <div class="row">
@@ -43,21 +44,27 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    {{!-- Si existen playlist --}}
                     {{#if playlists}}
                     <div class="list-group">
+                        {{!-- Recorremos las playlist --}}
                         {{#each playlists as |playlist|}}
                         <label class="list-group-item">
+                            {{!-- Checkbox de "agregar a la playlist" --}}
                             <input class="form-check-input me-1" name="playlistId" type="checkbox"
                                 value="{{playlist._id}}">
+                            {{!-- Nombre de la playlist --}}
                             {{playlist.name}}
                         </label>
                         {{/each}}
                         <input type="hidden" name="trackId" id="trackId">
                     </div>
+                    {{!-- Si no existen playlist permitimos crearla --}}
                     {{else}}
                     <a class="btn btn-primary" href="/profile/playlists/new">Crear playlist</a>
                     {{/if}}
                 </div>
+                {{!-- Botones de cerrar y guardar --}}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
