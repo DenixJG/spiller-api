@@ -13,8 +13,6 @@ services:
     spiller-music:
         image: spiller-music
         container_name: spiller_music_app
-        build:
-            dockerfile: ./Dockerfile
         ports: 
             - 80:4000
         depends_on:
