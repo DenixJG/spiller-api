@@ -11,7 +11,7 @@ services:
             - 27017:27017
     
     spiller-music:
-        image: spiller-music
+        image: denixjg/spiller-music:0.2v
         container_name: spiller_music_app
         ports: 
             - 80:4000
